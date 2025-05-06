@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7CE56E95-0E97-4977-AAD6-018A9804DB1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blocks", "blocks", "{82C14B07-D342-4D41-816E-AB9B340655BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternCompress.Blocks", "src\blocks\PatternCompress.Blocks\PatternCompress.Blocks.csproj", "{807F91AE-8A78-40A3-AC91-7A9A42E4BCF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{807F91AE-8A78-40A3-AC91-7A9A42E4BCF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807F91AE-8A78-40A3-AC91-7A9A42E4BCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807F91AE-8A78-40A3-AC91-7A9A42E4BCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807F91AE-8A78-40A3-AC91-7A9A42E4BCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{82C14B07-D342-4D41-816E-AB9B340655BE} = {7CE56E95-0E97-4977-AAD6-018A9804DB1F}
+		{807F91AE-8A78-40A3-AC91-7A9A42E4BCF3} = {82C14B07-D342-4D41-816E-AB9B340655BE}
+	EndGlobalSection
+EndGlobal
