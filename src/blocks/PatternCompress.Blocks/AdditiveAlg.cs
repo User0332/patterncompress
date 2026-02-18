@@ -33,11 +33,13 @@ static class AdditiveAlg
 			Console.WriteLine($"[!]    Decompressed size does not match original size: {decompressed.Length} != {data.Length}");
 		}
 
-		for (int i = 0; i < decompressed.Length; i++)
+		for (int i = 0; i < data.Length; i++)
 		{
-			if (decompressed[i] != data[i])
+			if (i >= decompressed.Length || decompressed[i] != data[i])
 			{
-				Console.WriteLine($"[!]    Decompressed data does not match original data at index {i}: {decompressed[i]} != {data[i]}");
+				string val = i < decompressed.Length ? decompressed[i].ToString() : "null";
+
+				Console.WriteLine($"[!]    Decompressed data does not match original data at index {i}: {val} != {data[i]}");
 			}
 		}
 
@@ -71,18 +73,18 @@ static class AdditiveAlg
 
 			int numberOfCompressableBytes = j-i;
 
+			int start = i-1;
+
 			if (numberOfCompressableBytes > GenerateCodeIfMoreBytesThanThis)
 			{
-				int start = i-1;
-
 				ImmutableArray<byte> addIterCode = [Protocol.OpCodes.DeltaIter, data[start],  ..BitConverter.GetBytes((ushort) numberOfCompressableBytes), searchDelta];
 
 				sections.Add(Protocol.MakeSection(Protocol.SectionType.Code, addIterCode));
-				if (j != data.Length) sections.Add(Protocol.MakeSection(Protocol.SectionType.Data, [data[j]]));
+				sections.Add(Protocol.MakeSection(Protocol.SectionType.Data, [data[j-1]]));
 			}
 			else
 			{
-				sections.Add(Protocol.MakeSection(Protocol.SectionType.Data, data[(i-1)..j]));
+				sections.Add(Protocol.MakeSection(Protocol.SectionType.Data, data[start..j]));
 			}
 
 			i+=numberOfCompressableBytes;
@@ -109,7 +111,6 @@ static class AdditiveAlg
 
 		foreach (var section in sections)
 		{
-			Console.WriteLine($"Section: {section.Length} bytes, {Protocol.GetSectionType(section)}");
 			compressed.AddRange(section);
 		}
 
@@ -139,8 +140,6 @@ static class AdditiveAlg
 
 			i+=Protocol.HeaderSize;
 
-			Console.WriteLine($"Section: {Protocol.HeaderSize+sectionLength} bytes, {sectionType}");
-
 			if (sectionType == Protocol.SectionType.Data)
 			{
 				decompressed.AddRange(compressed[i..(i+sectionLength)]);
@@ -166,11 +165,12 @@ static class AdditiveAlg
 							byte delta = compressed[j++];
 
 							for (int k = 0; k < count; k++)
-							{unchecked {
-								// Console.WriteLine($"DeltaIter: {startOffset} + {k} * {delta} = {startOffset + (k * delta)}");
-								
-								decompressed.Add((byte) (startOffset + (k * delta)));
-							}}
+							{
+								unchecked
+								{
+									decompressed.Add((byte) (startOffset + (k * delta)));
+								}
+							}
 
 							break;
 

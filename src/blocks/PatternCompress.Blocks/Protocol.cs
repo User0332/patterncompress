@@ -4,7 +4,7 @@ namespace PatternCompress.Blocks;
 
 public static class Protocol
 {
-	public static class OpCodes // not an enum for ease of use --> I know, it sounds counterintuitive
+	public static class OpCodes // not an enum to avoid casting
 	{
 		public const byte DeltaIter = 0; // !deltaiter {startOffset%u8} {count%u32} {delta%u8}
 	}
